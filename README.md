@@ -23,5 +23,5 @@
 ## Thanks to
 
 - [`modules/kakaolink.php`](modules/kakaolink.php): [ye-seola/kakaolink-py](https://github.com/ye-seola/kakaolink-py)
-- [`modules/ChatHelper.php`](modules/ChatHelper.php): [naijun0403(https://github.com/naijun0403)/talk-api.naijun.dev](https://talk-api.naijun.dev/swagger)
+- [`modules/ChatHelper.php`](modules/ChatHelper.php): [naijun0403](https://github.com/naijun0403)/[talk-api.naijun.dev](https://talk-api.naijun.dev/swagger)
 - Iris : [dolidolih/Iris](https://github.com/dolidolih/Iris)
