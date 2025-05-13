@@ -9,7 +9,8 @@ class ChatHelper {
 
     private string $authToken = '';
     private string $deviceUuid = '';
-        private string $url = 'https://talk-api.naijun.dev/api/v1/send';
+    private string $url = 'https://talk-api.naijun.dev/api/v1/send';
+    
     public function setCred($cred) {
         $this->authToken = $cred->access_token;
         $this->deviceUuid = $cred->d_id;
