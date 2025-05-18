@@ -1225,27 +1225,11 @@ function getRoomName($chatId) {
     $ids = json_decode($res["data"][0]["active_member_ids"], true);
     $ids = new Zrray($ids);
     if($ids->length>0){
-    /* $sliced = $ids->length > 4
-        ? $ids->slice(0, 4)
-        : $ids;
-    */
     $names = getUserNames($ids->toArray());
-    $sortedArr = $names;
-    usort($sortedArr, fn($a, $b) => kakaoSort($a, $b));
-    $sorted = new Zrray($names); //new Zrray($sortedArr);
+    $sorted = new Zrray($names);
     return implode(", ", $sorted->toArray()) . (($sorted->length>1) ? "" : "");    
     }
     return config()["bot_name"] ?? null;
-}
-
-function kakaoSort($a, $b) {
-    $fa = mb_substr($a, 0, 1, 'UTF-8');
-    $fb = mb_substr($b, 0, 1, 'UTF-8');
-
-    $pa = preg_match('/[가-힣]/u', $fa) ? 0 : (preg_match('/[a-zA-Z]/u', $fa) ? 1 : 2);
-    $pb = preg_match('/[가-힣]/u', $fb) ? 0 : (preg_match('/[a-zA-Z]/u', $fb) ? 1 : 2);
-
-    return $pa === $pb ? strcmp($a, $b) : $pa - $pb;
 }
 
 function emoticon_decrypt($data, $key = "a271730728cbe141e47fd9d677e9006d") {
