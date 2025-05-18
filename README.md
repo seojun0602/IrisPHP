@@ -24,5 +24,5 @@
 
 - [`modules/kakaolink.php`](modules/kakaolink.php): [ye-seola/kakaolink-py](https://github.com/ye-seola/kakaolink-py)
 - [`modules/ChatHelper.php`](modules/ChatHelper.php): [naijun0403/](https://github.com/naijun0403)[talk-api.naijun.dev](https://talk-api.naijun.dev/swagger)
-- [`modules/iris-api(emoticon_decrypt)`](https://github.com/seojun0602/IrisPHP/blob/main/modules/iris_api.php#L1235): [blluv/KakaoTalkEmoticonDownloader](https://github.com/blluv/KakaoTalkEmoticonDownloader)
+- [`modules/iris-api.php`](https://github.com/seojun0602/IrisPHP/blob/main/modules/iris_api.php#L1235): [blluv/KakaoTalkEmoticonDownloader](https://github.com/blluv/KakaoTalkEmoticonDownloader)
 - Iris : [dolidolih/Iris](https://github.com/dolidolih/Iris)
