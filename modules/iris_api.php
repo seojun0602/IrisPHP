@@ -10,34 +10,79 @@
 @include "./modules/cred.php";
 */
 
-function onMessage(callable $callback)
-{
-    $raw = file_get_contents("php://input");
-    $data = json_decode($raw, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        http_response_code(400);
-        echo json_encode(["error" => "Invalid data"]);
-        return;
-    }
-    [
-        "msg" => $msg,
-        "room" => $room,
-        "sender" => $sender,
-        "json" => $json
-    ] = $data;
+class Event {
+    const MESSAGE = 'message';
+}
 
-    [
-        "chat_id" => $chatId,
-        "user_id" => $userId,
-        "attachment" => $attachment,
-        "created_at" => $createdAt,
-        "deleted_at" => $deletedAt,
-        "id" => $logId,
-        "_id" => $id,
-        "type" => $type
-    ] = $json;
-    $message = new Message($msg, $room, $chatId, $sender, $userId, $attachment, $logId, $id, $type, $createdAt, $deletedAt);
-    $callback($message);
+$raw = file_get_contents("php://input");
+$data = json_decode($raw, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                http_response_code(400);
+                echo json_encode(["error" => "Invalid data"]);
+                return;
+            }
+
+            [
+                "msg" => $msg,
+                "room" => $room,
+                "sender" => $sender,
+                "json" => $json,
+                "atz" => $atz
+            ] = $data;
+
+            [
+                "chat_id" => $chatId,
+                "user_id" => $userId,
+                "attachment" => $attachment,
+                "created_at" => $createdAt,
+                "deleted_at" => $deletedAt,
+                "id" => $logId,
+                "_id" => $id,
+                "type" => $type
+            ] = $json;
+
+class Bot {
+    private $listeners = [];
+
+    public function addListener(string $event, callable $callback): void {
+        if (!isset($this->listeners[$event])) {
+            $this->listeners[$event] = [];
+        }
+        $this->listeners[$event][] = $callback;
+        if ($event === Event::MESSAGE) {
+            $global = $GLOBALS;
+            
+            [
+               'msg'        => $msg,
+               'room'       => $room,
+               'sender'     => $sender,
+               'json'       => $json,
+               'atz'        => $atz,
+               'chatId'    => $chatId,
+               'userId'    => $userId,
+               'attachment' => $attachment,
+               'createdAt' => $createdAt,
+               'deletedAt' => $deletedAt,
+               'logId'         => $logId,
+               'id'        => $id,
+               'type'       => $type
+             ] = $global;
+ 
+            $message = new Message($msg, $room, $chatId, $sender, $userId, $attachment, $logId, $id, $type, $createdAt, $deletedAt);
+            call_user_func($callback, $message);
+        }
+    }
+}
+
+class BotManager {
+    private static ?Bot $currentBot = null;
+
+    public static function getCurrentBot(): Bot {
+        if (self::$currentBot === null) {
+            self::$currentBot = new Bot();
+        }
+        return self::$currentBot;
+    }
 }
 
 class Http
