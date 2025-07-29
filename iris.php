@@ -12,20 +12,20 @@ $Kakao = class_exists('Zakao') ? new Zakao($appKey='app key', $origin='origin') 
 
 $adminHash = [""];
 
-onMessage(function ($msg) {
+function onMessage($msg) {
     global $Kakao, $detail, $adminHash;
 
     if ($msg->content == "!hi") {
         $msg->reply("hi " . $msg->author->name);
     }
 
-    if ($msg->content == "​​!ping") {
-        $msg->reply("pong!");
+    if ($msg->content == "​​zzugu!") {
+        $msg->reply("zzugu ❤️");
     }
 
     if($msg->content == "대충파일스트림예시") {
-       FileStream::write("./data/filename.txt", "대충 파일에 저장한 텍스트");
-       $msg->reply(FileStream::read("./data/filename.txt"));
+       FileStream::write("./data/zzugu.txt", "zzugu는 신이에요.");
+       $msg->reply(FileStream::read("./data/zzugu.txt"));
     } 
     
     if (($msg->content->startsWith("#")) && (in_array($msg->author->hash->get(), $adminHash))){
@@ -64,7 +64,10 @@ onMessage(function ($msg) {
          }
     }
 
-});
+};
+
+$bot = BotManager::getCurrentBot();
+$bot->addListener(Event::MESSAGE, 'onMessage');
 
 ?>
 
